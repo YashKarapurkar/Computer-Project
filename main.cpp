@@ -9,14 +9,25 @@ using namespace std;
 class car
 {
 	public:
-	char car_name[30];
+	char modelName[30], engine[10], horsePower[20];
 	int cost;
+
+    void get_data()
+    {
+        cout<<"Model Name: ";
+        cin>>modelName;
+        cout<<"Engine: ";
+        cin>>engine;
+        cout<<"Horse Power: ";
+        cin>>
+    }
 };
 
 int main()
 {
     char username[20], password[20];
     ifstream fin("secure.dat", ios::in|ios::binary);
+    ofstream fout("cars.DB", ios::app|ios::binary);
     int dec, ret;
     car car_adder, reader;
 
@@ -64,7 +75,11 @@ int main()
             case 3:
             cout<<"<<Car Adder Menu>>\n";
             cout<<"Car Name: ";
-            cin>>
+            cin>>car_adder.car_name;
+            cout<<"Cost: ";
+            cin>>car_adder.cost;
+            fout.write((char*)&car_adder, sizeof(car_adder));
+            fout.close();
 
             case 4:
             break;
@@ -83,5 +98,7 @@ void main_menu()
         system("pause");
         system("clear");
         cout<<"<<Main Menu>>\n";
+        cout<<"1. Shop\n";
+        cout<<"2. Your Orders\n";
     }
 }
