@@ -8,31 +8,55 @@ using namespace std;
 
 class car
 {
-	public:
-	char modelName[30], engine[10], horsePower[20];
-	int cost;
+public:
+    int index;
+	char modelName[30], engine[10];
+    int horsePower;
+	float cost;
 
     void get_data()
     {
+        cout<<"Index No: ";
+        cin>>index;
         cout<<"Model Name: ";
         cin>>modelName;
         cout<<"Engine: ";
         cin>>engine;
         cout<<"Horse Power: ";
-        cin>>
+        cin>>horsePower;
+        cout<<"Cost(In Dollars): ";
+        cin>>cost;
+    }
+
+    void display()
+    {
+        cout<<"Index No: "<<index<<endl;
+        cout<<"Model Name: "<<modelName<<endl;
+        cout<<"Engine: "<<engine<<endl;
+        cout<<"Horse Power: "<<horsePower<<endl;
+        cout<<"Cost: "<<cost<<" Million $"<<endl<<endl;
+    }
+
+    int indx()
+    {
+        return index;
     }
 };
 
 int main()
 {
+
+    void main_menu();
+
     char username[20], password[20];
     ifstream fin("secure.dat", ios::in|ios::binary);
     ofstream fout("cars.DB", ios::app|ios::binary);
-    int dec, ret;
+    int dec, ret, ext = 0;
     car car_adder, reader;
 
     while(true)
     {
+        ext = 0;
         system("pause");
         system("clear");
         cout<<"<<Welcome to Auto-Expo 2018>>\n";
@@ -74,18 +98,21 @@ int main()
 
             case 3:
             cout<<"<<Car Adder Menu>>\n";
-            cout<<"Car Name: ";
-            cin>>car_adder.car_name;
-            cout<<"Cost: ";
-            cin>>car_adder.cost;
+            car_adder.get_data();
             fout.write((char*)&car_adder, sizeof(car_adder));
             fout.close();
 
             case 4:
+            ext = 1;
             break;
 
             default:
             cout<<"Wrong option!\n";
+        }
+
+        if(ext == 1)
+        {
+            break;
         }
     }
     return 0;
@@ -93,12 +120,40 @@ int main()
 
 void main_menu()
 {
+    int dec, ext=0;
     while(true)
     {
+        ext = 0;
         system("pause");
         system("clear");
         cout<<"<<Main Menu>>\n";
         cout<<"1. Shop\n";
         cout<<"2. Your Orders\n";
+        cout<<"3. Exit\n";
+        cout<<"Input: ";
+        cin>>dec;
+
+        switch(dec)
+        {
+            case 1:
+            cout<<"Shop";
+            break;
+
+            case 2:
+            cout<<"Orders";
+            break;
+
+            case 3:
+            ext = 1;
+            break;
+
+            default:
+            cout<<"Wrong Option!\n";
+        }
+
+        if(ext == 1)
+        {
+            break;
+        }
     }
 }
