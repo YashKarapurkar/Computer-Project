@@ -11,7 +11,7 @@ class file_reader
 
 
 
-int main()
+/*int main()
 {
 	ofstream fout("secure.dat", ios::out|ios::binary);
 	file_reader id;
@@ -20,6 +20,13 @@ int main()
 	strcpy(id.password, "admin");
 
 	fout.write((char*)&id, sizeof(id));
+	fout.close();
+	return 0;
+}*/
+
+int main()
+{
+	ofstream fout("cars.DB", ios::out|ios::binary);
 	fout.close();
 	return 0;
 }
