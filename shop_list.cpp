@@ -1,5 +1,6 @@
 #include<fstream>
 #include<iostream>
+#include<string.h>
 
 using namespace std;
 
@@ -40,20 +41,32 @@ public:
     }
 };
 
-void shop_list()
+class ord_read
+{
+    public:
+    char username[20];
+    int product_no;
+};
+
+void shop_list(char username[20])
 {
     int dec;
     char ch;
     car car_reader;
     ifstream fin("car.DB", ios::in|ios::binary);
     cout<<"\t\tModel\n";
-    while(fin.read((char*)&car_reader, sizeof(car_reader)))
+    while(fin)
     {
+        fin.read((char*)&car_reader, sizeof(car_reader));
         cout<<"\t\t"<<car_reader.index<<". "<<car_reader.modelName<<endl;
     }
     cout<<"\t\tInput: ";
     cin>>dec;
     fin.close();
+
+    ord_read user;
+    strcpy(user.username, username);
+    user.product_no = dec;
 
     ifstream fin2("car.DB", ios::in|ios::binary);
 
@@ -64,6 +77,36 @@ void shop_list()
             car_reader.display();
             cout<<"\t\tBuy Now!(y/n): ";
             cin>>ch;
+            if(ch == 'y' || ch == 'Y')
+            {
+                ofstream fout("order_list.od", ios::app|ios::binary);
+                fout.write((char*)&user, sizeof(user));
+                fout.close();
+            }
+            break;
+        }
+    }
+}
+
+void order_list(char username[20])
+{
+    ifstream fin("order_list", ios::in|ios::binary);
+    ifstream fin2("car.DB", ios::in|ios::binary);
+    ord_read reader;
+    car car_info;
+    while(fin.read((char*)&reader, sizeof(reader)))
+    {
+        if(strcmp(username, reader.username) == 0)
+        {
+            while(fin2.read((char*)&car_info, sizeof(car_info)))
+            {
+                if(reader.product_no == car_info.index)
+                {
+                    car_info.display();
+                    //system("pause");
+                    //system("clear");
+                }
+            }
         }
     }
 }

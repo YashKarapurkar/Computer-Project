@@ -1,5 +1,6 @@
 #include<fstream>
 #include<string.h>
+#include<iostream>
 
 using namespace std;
 
@@ -22,7 +23,7 @@ int verify(char username[20], char password[20])
 			break;
 		}
 	}	
-	reader.close();
+	fin.close();
 	if(flag == 0)
 	{
 		return 1;

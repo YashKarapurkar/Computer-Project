@@ -9,7 +9,11 @@ class file_reader
 	char username[20], password[20];
 };
 
-
+class order
+{
+	public:
+	int ord[5];
+};
 
 /*int main()
 {
@@ -30,3 +34,4 @@ int main()
 	fout.close();
 	return 0;
 }
+

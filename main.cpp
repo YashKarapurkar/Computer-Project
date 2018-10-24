@@ -7,7 +7,7 @@
 
 using namespace std;
 
-
+char username_glo[20];
 
 int main()
 {
@@ -16,9 +16,9 @@ int main()
 
     char username[20], password[20], ch='y';
     ifstream fin("secure.dat", ios::in|ios::binary);
-    ofstream fout("cars.DB", ios::app|ios::binary);
+    
     int dec, ret, ext = 0;
-    car car_adder, reader;
+    car car_adder;
 
     while(true)
     {
@@ -32,6 +32,7 @@ int main()
         cout<<"\t\t4. Exit\n";
         cout<<"\t\tInput: \n";
         cin>>dec;
+        ofstream fout("cars.DB", ios::app|ios::binary);
         //system("pause");
 
         switch(dec)
@@ -48,6 +49,7 @@ int main()
 
             if(ret == 2)
             {
+                strcpy(username_glo, username);
                 main_menu();
             }
             else if(ret == 1)
@@ -63,18 +65,13 @@ int main()
             break;
 
             case 3:
-            file:
             system("clear");
             cout<<"\t\t<<Car Adder Menu>>\n";
             car_adder.get_data();
+            
             fout.write((char*)&car_adder, sizeof(car_adder));
-            cout<<"\t\tDo you want to add more: ";
-            cin>>ch;
-            if(ch == 'y' || ch == 'Y')
-            {
-                goto file;
-            }
             fout.close();
+            break;
 
             case 4:
             ext = 1;
@@ -111,11 +108,12 @@ void main_menu()
         {
             case 1:
             cout<<"\t\t<<Shop>>\n";
-
+            shop_list(username_glo);
             break;
 
             case 2:
-            cout<<"\t\tOrders";
+            cout<<"\t\t<<Orders>>";
+            order_list(username_glo);
             break;
 
             case 3:
